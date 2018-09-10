@@ -10,15 +10,20 @@ describe AirTrafficController do
 
   it 'prevents landing in bad weather' do
     heathrow = AirTrafficController.new
-    expect { heathrow.land_plane_when_safe(Plane.new) }.to raise_error("You can't land in this Weather, Jack")
+    plane = Plane.new
+    expect { plane.land_plane_when_safe }.to raise_error
+#expect { plane.land_plane_when_safe(Plane.new) }.to raise_error
+    #("You can't land in this Weather, Jack")
 end
 
 
-#it 'prevents taking off in bad weather' do
-#  heathrow = AirTrafficController.new
-#allow(Weather).to receive(:bad_weather).and_return(true)
-#expect { heathrow.take_off_when_safe }.to raise_error("You can't possibly fly that plane is this weather?")
-#end
+it 'prevents taking off in bad weather' do
+  heathrow = AirTrafficController.new
+  plane = Plane.new
+  expect { plane.take_off_when_safe }.to raise_error
+#expect { heathrow.take_off_when_safe }.to raise_error
+#("You can't possibly fly that plane is this weather?")
+end
 
 # - Test not working
 

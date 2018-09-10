@@ -2,7 +2,8 @@
 Was tasked with the weekend airport challenge.
 Made the mistake of testing using IRB as I went and creating Rspec tests retrospectively.
 This meant that I wasn't able to produce extensive and accurate Rspec tests in the given time.
-If I was to revisit the task I would lead with the creation of Rspec tests and update the lib files in order to pass the tests. (which I might try this evening!)
+If I was to revisit the task I would lead with the creation of Rspec tests and update the lib files in order to pass the tests.
+
 
 
 
