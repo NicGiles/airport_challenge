@@ -9,4 +9,13 @@ describe Weather do
       expect(weather.unsafe_weather?).to be false
     end
   end
+
+  describe '#bad_weather?' do
+    it 'is sometimes nasty' do
+      allow(@bad_weather).to receive(:rand).and_return 5
+      expect(weather.unsafe_weather?).to be true
+    end
+  end
+
+
 end
