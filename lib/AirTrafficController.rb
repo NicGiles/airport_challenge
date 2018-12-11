@@ -21,6 +21,7 @@ HANGER_CAPACITY = 8
   end
 
   def take_off_when_safe(plane)
+    raise "You fly boys, you crack me up" if unsafe_weather?
     raise 'No planes here' if empty?
     available_planes.pop
     plane.take_off(self)

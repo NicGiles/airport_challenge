@@ -66,6 +66,16 @@ end
       end
   end
 
+  context 'nasty weather, planes available' do
+    before do
+      allow(weather).to receive(:unsafe_weather?).and_return true
+    end
+
+    it 'prevents plane taking off if windy' do
+      expect { heathrow.take_off_when_safe(plane) }.to raise_error "You fly boys, you crack me up"
+    end
+  end
+
 end
 
 end
