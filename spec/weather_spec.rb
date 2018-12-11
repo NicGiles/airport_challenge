@@ -1,0 +1,12 @@
+require 'Weather'
+
+describe Weather do
+  subject(:weather) { described_class.new }
+
+  describe '#bad_weather?' do
+    it 'is sometimes nice' do
+      allow(@bad_weather).to receive(:rand).and_return 2
+      expect(weather.unsafe_weather?).to be false
+    end
+  end
+end
