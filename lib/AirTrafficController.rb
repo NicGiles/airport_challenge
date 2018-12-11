@@ -21,6 +21,7 @@ HANGER_CAPACITY = 8
   end
 
   def take_off_when_safe(plane)
+    raise 'No planes here' if empty?
     available_planes.pop
     plane.take_off(self)
   end
@@ -31,6 +32,10 @@ HANGER_CAPACITY = 8
 
   def full?
     available_planes.length >= capacity
+  end
+
+  def empty?
+    available_planes.length == 0
   end
 
 end
