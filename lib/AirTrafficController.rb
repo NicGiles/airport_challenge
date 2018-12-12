@@ -1,4 +1,4 @@
-
+require_relative 'Plane'
 require_relative 'Weather'
 
 class AirTrafficController
@@ -6,7 +6,7 @@ attr_reader :available_planes, :weather, :capacity
 
 HANGER_CAPACITY = 8
 
-  def initialize(weather, capacity)
+  def initialize(weather = Weather.new, capacity = HANGER_CAPACITY)
     @capacity = HANGER_CAPACITY
     @weather = weather
     @available_planes = []
@@ -16,8 +16,8 @@ HANGER_CAPACITY = 8
     raise "You can't land in this Weather, Jack" if unsafe_weather?
     raise 'Sorry boss, no room in the inn' if full?
     @available_planes << plane
-    "Plane is in the hanger"
     plane.land_plane(self)
+    "Plane is in the hanger"
   end
 
   def take_off_when_safe(plane)
@@ -25,6 +25,7 @@ HANGER_CAPACITY = 8
     raise 'No planes here' if empty?
     available_planes.pop
     plane.take_off(self)
+    "Plane is in the air"
   end
 
   def unsafe_weather?
