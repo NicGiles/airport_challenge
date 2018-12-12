@@ -12,6 +12,7 @@ class Plane
   end
 
   def take_off
+    raise "Hold on, that plane is already in the air" unless in_hanger?
     @in_the_air = true
   end
 
