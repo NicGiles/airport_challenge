@@ -16,7 +16,7 @@ HANGER_CAPACITY = 8
     raise "You can't land in this Weather, Jack" if unsafe_weather?
     raise 'Sorry boss, no room in the inn' if full?
     @available_planes << plane
-    plane.land_plane(self)
+    plane.land_plane
     "Plane is in the hanger"
   end
 
@@ -24,9 +24,11 @@ HANGER_CAPACITY = 8
     raise "You fly boys, you crack me up" if unsafe_weather?
     raise 'No planes here' if empty?
     available_planes.pop
-    plane.take_off(self)
+    plane.take_off
     "Plane is in the air"
   end
+
+  private
 
   def unsafe_weather?
     weather.unsafe_weather?

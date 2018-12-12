@@ -6,11 +6,11 @@ class Plane
     @in_the_air = true
   end
 
-  def land_plane(plane)
+  def land_plane
     @in_the_air = false
   end
 
-  def take_off(plane)
+  def take_off
     @in_the_air = true
   end
 
