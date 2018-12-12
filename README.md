@@ -19,49 +19,52 @@ Feature Test
 
 Open IRB and follow these steps:
 
+```
+
 :001 > require './lib/AirTrafficController'
 
 Create a new Airport
 :002 > heathrow = AirTrafficController.new
 
 => #<AirTrafficController:0x00007fc49c157b48 @capacity=8, @weather=#<Weather:0x00007fc49c157b20>, @available_planes=[]>
+```
 
 A Plane enters Heathrow's airspace
 
+```
 :003 > plane = Plane.new
  => #<Plane:0x00007fc49b1760a8 @in_the_air=true>
- 
+```
 
 Instruct Plane to land & receive confirmation
-
+```
 :004 > heathrow.land_plane_when_safe(plane)
  => "Plane is in the hanger"
-
+```
 
 Instruct Plane to take off & receive confirmation
-
+```
  :005 > heathrow.take_off_when_safe(plane)
  => "Plane is in the air"
-
+```
 
 Prevent too many planes from landing
-
- :006 > 8.times{ heathrow.land_plane_when_safe(plane) }
-
+```
+:006 > 8.times{ heathrow.land_plane_when_safe(plane) }
 RuntimeError (Sorry boss, no room in the inn)
-
+```
 
 AirTrafficController will check the conditions and prevent planes from landing or taking off in nasty weather.
 This probability of nasty weather is 20%.
 In the below example the conditions were fine for the first two planes but by the time the third plane tried to take off the clouds had rolled in and the AirTraffic systems prevented takeoff.
-
+```
 2.5.0 :007 > heathrow.take_off_when_safe(plane)
  => "Plane is in the air"
 2.5.0 :008 > heathrow.take_off_when_safe(plane)
  => "Plane is in the air"
 2.5.0 :009 > heathrow.take_off_when_safe(plane)
 RuntimeError (You fly boys, you crack me up)
-
+```
 User stories
 -----
 ```
