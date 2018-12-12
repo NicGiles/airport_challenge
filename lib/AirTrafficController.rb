@@ -2,11 +2,11 @@ require_relative 'Plane'
 require_relative 'Weather'
 
 class AirTrafficController
-attr_reader :available_planes, :weather, :capacity
+  attr_reader :available_planes, :weather, :capacity
 
-HANGER_CAPACITY = 8
+  HANGER_CAPACITY = 8
 
-  def initialize(weather = Weather.new, capacity = HANGER_CAPACITY)
+  def initialize(weather = Weather.new, _capacity = HANGER_CAPACITY)
     @capacity = HANGER_CAPACITY
     @weather = weather
     @available_planes = []
@@ -39,7 +39,7 @@ HANGER_CAPACITY = 8
   end
 
   def empty?
-    available_planes.length == 0
+    available_planes.length.zero?
   end
 
 end
