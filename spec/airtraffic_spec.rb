@@ -55,6 +55,12 @@ describe AirTrafficController do
         heathrow.take_off_when_safe(plane)
         expect(subject.available_planes.length).to eq 0
       end
+
+      it 'prevents plane taking off from wrong airport' do
+        plane2 = Plane.new
+        heathrow.land_plane_when_safe(plane)
+        expect { heathrow.take_off_when_safe(plane2) }.to raise_error "That plane isn't even at this airport"
+      end
     end
 
     context 'nice weather but no planes' do

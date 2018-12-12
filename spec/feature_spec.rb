@@ -26,6 +26,7 @@ describe 'Feature Test' do
     # So I can get passengers on the way to their destination
     # I want to instruct a plane to take off from an airport and confirm that it is no longer in the airport
     # EDGE CASE - cannot takeoff with same plane twice
+    # EDGE CASE - cannot takeoff from a different airport
 
     it 'allows available planes to take off and confirms' do
       airport.land_plane_when_safe(plane)
@@ -37,7 +38,15 @@ describe 'Feature Test' do
       airport.land_plane_when_safe(plane)
       airport.land_plane_when_safe(plane2)
       expect(airport.take_off_when_safe(plane)).to eq "Plane is in the air"
-      expect { airport.take_off_when_safe(plane) }.to raise_error "Hold on, that plane is already in the air"
+      expect { airport.take_off_when_safe(plane) }.to raise_error "That plane isn't even at this airport"
+    end
+
+    it 'prevents plane taking off from wrong airport' do
+      plane2 = Plane.new
+      # airport2 = AirTrafficController.new
+      airport.land_plane_when_safe(plane)
+      # airport2.land_plane_when_safe(plane2)
+      expect { airport.take_off_when_safe(plane2) }.to raise_error "That plane isn't even at this airport"
     end
 
     # As an air traffic controller
