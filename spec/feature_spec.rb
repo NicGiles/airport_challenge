@@ -12,9 +12,17 @@ describe 'Feature Test' do
     # As an air traffic controller
     # So I can get passengers to a destination
     # I want to instruct a plane to land at an airport
+    #EDGE CASE - cannot land same plane twice
     it 'allows planes to land and confirms' do
       expect(airport.land_plane_when_safe(plane)).to eq "Plane is in the hanger"
     end
+
+    it 'prevents plane already in hanger from landing twice' do
+      expect(airport.land_plane_when_safe(plane)).to eq "Plane is in the hanger"
+      expect{ airport.land_plane_when_safe(plane) }.to raise_error "Hold on, that plane is already in the hanger"
+    end
+
+
 
     # As an air traffic controller
     # So I can get passengers on the way to their destination
@@ -39,8 +47,6 @@ describe 'Feature Test' do
       new_planes.each { |current_plane| airport.land_plane_when_safe(current_plane) }
       expect { airport.land_plane_when_safe(plane) }.to raise_error 'Sorry boss, no room in the inn'
     end
-
-
 
   end
 
@@ -69,6 +75,5 @@ describe 'Feature Test' do
       bad_weather
       expect { airport.take_off_when_safe(plane) }.to raise_error "You fly boys, you crack me up"
     end
-
   end
 end
