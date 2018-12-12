@@ -34,11 +34,13 @@ describe 'Feature Test' do
     # I would like a default airport capacity that can be overridden as appropriate
 
     it "tells pilot they can't land when full" do
-      AirTrafficController::HANGER_CAPACITY.times do
-        airport.land_plane_when_safe(plane)
-      end
+      new_planes = []
+      AirTrafficController::HANGER_CAPACITY.times { new_planes << Plane.new }
+      new_planes.each { |current_plane| airport.land_plane_when_safe(current_plane) }
       expect { airport.land_plane_when_safe(plane) }.to raise_error 'Sorry boss, no room in the inn'
     end
+
+
 
   end
 
@@ -59,7 +61,7 @@ describe 'Feature Test' do
 # I want to prevent takeoff when weather is stormy
 
   context 'nice weather so the plane can land, but then a storm sets in and no planes are allowed to leave. Because of the storm.' do
-  
+
     it 'prevents take off in bad weather' do
       good_weather
       airport.land_plane_when_safe(plane)
@@ -67,6 +69,6 @@ describe 'Feature Test' do
       bad_weather
       expect { airport.take_off_when_safe(plane) }.to raise_error "You fly boys, you crack me up"
     end
-  
+
   end
 end
