@@ -38,15 +38,15 @@ describe 'Feature Test' do
       airport.land_plane_when_safe(plane)
       airport.land_plane_when_safe(plane2)
       expect(airport.take_off_when_safe(plane)).to eq "Plane is in the air"
-      expect { airport.take_off_when_safe(plane) }.to raise_error "That plane isn't even at this airport"
+      expect { airport.take_off_when_safe(plane) }.to raise_error "That plane isn't at this airport"
     end
 
     it 'prevents plane taking off from wrong airport' do
       plane2 = Plane.new
-      # airport2 = AirTrafficController.new
+      airport2 = AirTrafficController.new
       airport.land_plane_when_safe(plane)
-      # airport2.land_plane_when_safe(plane2)
-      expect { airport.take_off_when_safe(plane2) }.to raise_error "That plane isn't even at this airport"
+      airport2.land_plane_when_safe(plane2)
+      expect { airport.take_off_when_safe(plane2) }.to raise_error "That plane isn't at this airport"
     end
 
     # As an air traffic controller

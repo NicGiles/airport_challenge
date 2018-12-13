@@ -23,7 +23,7 @@ class AirTrafficController
   def take_off_when_safe(plane)
     raise "You fly boys, you crack me up" if unsafe_weather?
     raise 'No planes here' if empty?
-    raise "That plane isn't even at this airport" unless available_planes.include?(plane)
+    raise "That plane isn't at this airport" unless available_planes.include?(plane)
     available_planes.delete(plane)
     plane.take_off
     "Plane is in the air"

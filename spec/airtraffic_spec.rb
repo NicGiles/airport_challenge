@@ -59,7 +59,7 @@ describe AirTrafficController do
       it 'prevents plane taking off from wrong airport' do
         plane2 = Plane.new
         heathrow.land_plane_when_safe(plane)
-        expect { heathrow.take_off_when_safe(plane2) }.to raise_error "That plane isn't even at this airport"
+        expect { heathrow.take_off_when_safe(plane2) }.to raise_error "That plane isn't at this airport"
       end
     end
 

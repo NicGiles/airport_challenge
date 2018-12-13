@@ -58,13 +58,85 @@ AirTrafficController will check the conditions and prevent planes from landing o
 This probability of nasty weather is 20%.
 In the below example the conditions were fine for the first two planes but by the time the third plane tried to take off the clouds had rolled in and the AirTraffic systems prevented takeoff.
 ```
-2.5.0 :007 > heathrow.take_off_when_safe(plane)
+:007 > heathrow.take_off_when_safe(plane)
  => "Plane is in the air"
-2.5.0 :008 > heathrow.take_off_when_safe(plane)
+:008 > heathrow.take_off_when_safe(plane)
  => "Plane is in the air"
-2.5.0 :009 > heathrow.take_off_when_safe(plane)
+:009 > heathrow.take_off_when_safe(plane)
 RuntimeError (You fly boys, you crack me up)
 ```
+
+Edge Case - Cannot land same plane twice
+```
+:001 > require './lib/AirTrafficController'
+
+Create a new Airport
+:002 > heathrow = AirTrafficController.new
+
+=> #<AirTrafficController:0x00007fc49c157b48 @capacity=8, @weather=#<Weather:0x00007fc49c157b20>, @available_planes=[]>
+
+:003 > plane = Plane.new
+ => #<Plane:0x00007fc49b1760a8 @in_the_air=true>
+:004 > heathrow.land_plane_when_safe(plane)
+ => "Plane is in the hanger"
+:005 > heathrow.land_plane_when_safe(plane)
+
+RuntimeError (Hold on, that plane is already in the hanger)
+:006 >
+
+```
+
+Edge Case - Cannot make same plane take off twice.
+Second Plane required to avoid 'empty hanger' error.
+```
+:001 > require './lib/AirTrafficController'
+
+Create a new Airport
+:002 > heathrow = AirTrafficController.new
+
+=> #<AirTrafficController:0x00007fc49c157b48 @capacity=8, @weather=#<Weather:0x00007fc49c157b20>, @available_planes=[]>
+
+:003 > plane = Plane.new
+ => #<Plane:0x00007fc49b1760a8 @in_the_air=true>
+:004 > plane2 = Plane.new
+ => #<Plane:0x00007fecf420e250 @in_the_air=true>
+:005 > heathrow.land_plane_when_safe(plane)
+ => "Plane is in the hanger"
+:006 > heathrow.land_plane_when_safe(plane2)
+ => "Plane is in the hanger"
+:007 > heathrow.take_off_when_safe(plane)
+ => "Plane is in the air"
+:008 > heathrow.take_off_when_safe(plane)
+
+RuntimeError (That plane isn't at this airport)
+:009 >
+
+```
+
+Edge Case - Plane cannot take off from the wrong airport
+```
+:001 > irb
+:001 > require './lib/AirTrafficController'
+ => true
+:002 > heathrow = AirTrafficController.new
+ => #<AirTrafficController:0x00007fb78920a920 @capacity=8, @weather=#<Weather:0x00007fb78920a8f8>, @available_planes=[]>
+:003 > plane = Plane.new
+ => #<Plane:0x00007fb78a812420 @in_the_air=true>
+:004 > plane2 = Plane.new
+ => #<Plane:0x00007fb788902198 @in_the_air=true>
+:005 > gatwick = AirTrafficController.new
+ => #<AirTrafficController:0x00007fb7888f0ec0 @capacity=8, @weather=#<Weather:0x00007fb7888f0e98>, @available_planes=[]>
+:006 > heathrow.land_plane_when_safe(plane)
+ => "Plane is in the hanger"
+:007 > gatwick.land_plane_when_safe(plane2)
+ => "Plane is in the hanger"
+:008 > heathrow.take_off_when_safe(plane2)
+
+RuntimeError (That plane isn't at this airport)
+
+```
+
+
 User stories
 -----
 ```
